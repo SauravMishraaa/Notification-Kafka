@@ -73,3 +73,14 @@ Expected Output:
 **Ports**
 - Kafka: `9092` (mapped to host)
 - Zookeeper: 2181 (container internal)
+
+**Behind the Curtain (Why It Works)**
+FastAPI responds in ms — doesn't care what happens to the message later.
+Kafka ensures message durability (until consumed).
+Consumer is long-lived; can be restarted, scaled.
+
+**Benefits**
+FastAPI stays fast. Delivery is async and decoupled.
+Kafka absorbs spikes. If 1000 messages suddenly come in, the system doesn't fall over.
+Retryable. If delivery fails, you can requeue.
+Observable. You can track delivered vs pending.
